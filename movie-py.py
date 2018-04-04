@@ -40,6 +40,8 @@ try:
             if i.h4.text=="Taglines:":movietaglines = i.h4.next_element.next_element.strip()
             if i.h4.text=="Also Known As:":moviealsoknown = i.h4.next_element.next_element.strip()
             if i.h4.text=="Country:":moviecountry = i.h4.next_sibling.next_element.text.strip()
+    for i in soup2.find_all("div", "slate"):
+	videonumber = i.a['data-video']
     for x in range(len(genresndate) - 1):
         moviegenres = moviegenres + ',' + genresndate[x]
     moviegenres = moviegenres[1:]
@@ -47,6 +49,7 @@ try:
     moviecast = [i.text for i in soup2.select(".credit_summary_item span a span")]
     moviedirector = moviecast[0]
     movieactors = moviecast[3] + ',' + moviecast[4] + ',' + moviecast[5];
+    movietrailer = "http://www.imdb.com/videoplayer/" + videonumber
 
     print(Fore.LIGHTRED_EX + "Title: " + Fore.LIGHTGREEN_EX + movietitle)
     print(Fore.LIGHTRED_EX + "IMDB Rating: " + Fore.LIGHTYELLOW_EX + movierating + "/10")
@@ -67,5 +70,6 @@ try:
     print(Fore.LIGHTRED_EX + "Cumulative Worldwide Gross: " + Fore.LIGHTBLUE_EX + movieworldgross)
     print(Fore.LIGHTRED_EX + "Ratio: " + Fore.LIGHTBLUE_EX + movieratio)
     print(Fore.LIGHTRED_EX + "Taglines: " + Fore.LIGHTBLUE_EX + movietaglines)
+    print(Fore.LIGHTRED_EX + "Trailer: " + Fore.LIGHTBLUE_EX + movietrailer)
 except:
     print(Fore.LIGHTRED_EX+"Something's wrong,Try Again Later")
