@@ -2,7 +2,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 import time
-from colorama import init,Fore
+from colorama import init, Fore
 init(convert=True)
 
 print(Fore.LIGHTBLACK_EX+"Loading...")
@@ -12,7 +12,7 @@ print(Fore.LIGHTBLACK_EX+"Please wait...\n")
 try:
     args = sys.argv[1:]
     movie = (' ').join(args)
-    page = requests.get('http://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=tt');
+    page = requests.get('http://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=tt')
     soup1 = BeautifulSoup(page.content, 'html.parser')
     movieid = soup1.select(".findList tr a")[0].get('href')
     movielink = "http://www.imdb.com" + movieid
@@ -24,7 +24,7 @@ try:
     movierating = soup2.select(".ratingValue span")[0].text
     metascore = soup2.select(".metacriticScore")
     metascore = metascore[0].text.strip() if metascore else None
-    contentrating = soup2.find('meta',{'itemprop':'contentRating'})
+    contentrating = soup2.find('meta',{'itemprop': 'contentRating'})
     contentrating = contentrating['content'].strip() if contentrating else None
     movielength = soup2.select(".subtext time")[0].text.strip()
     genresndate = [i.text for i in soup2.select(".subtext a")]
@@ -41,12 +41,14 @@ try:
             if i.h4.text=="Also Known As:":moviealsoknown = i.h4.next_element.next_element.strip()
             if i.h4.text=="Country:":moviecountry = i.h4.next_sibling.next_element.text.strip()
     for x in range(len(genresndate) - 1):
-        moviegenres = moviegenres + ',' + genresndate[x]
-    moviegenres = moviegenres[1:]
+        moviegenres += ',' + genresndate[x]
+    moviegenres = moviegenres[1:].replace("\n", '')
     moviedesc = soup2.select(".summary_text")[0].text.strip()
-    moviecast = [i.text for i in soup2.select(".credit_summary_item span a span")]
+    moviecast = [i.text.strip() for i in soup2.select(".credit_summary_item a")]
     moviedirector = moviecast[0]
-    movieactors = moviecast[3] + ',' + moviecast[4] + ',' + moviecast[5];
+    movieactors = moviecast[2] + ', ' + moviecast[3] + ', ' + moviecast[4]
+    trivia = soup2.select("#trivia")
+    triviasnippet = trivia[0].text.strip().split("\n")[1].replace("See more  »", '').replace('  ', ' ')
 
     print(Fore.LIGHTRED_EX + "Title: " + Fore.LIGHTGREEN_EX + movietitle)
     print(Fore.LIGHTRED_EX + "IMDB Rating: " + Fore.LIGHTYELLOW_EX + movierating + "/10")
@@ -67,5 +69,6 @@ try:
     print(Fore.LIGHTRED_EX + "Cumulative Worldwide Gross: " + Fore.LIGHTBLUE_EX + movieworldgross)
     print(Fore.LIGHTRED_EX + "Ratio: " + Fore.LIGHTBLUE_EX + movieratio)
     print(Fore.LIGHTRED_EX + "Taglines: " + Fore.LIGHTBLUE_EX + movietaglines)
+    print(Fore.LIGHTYELLOW_EX + "\nTrivia: " + Fore.LIGHTBLACK_EX + triviasnippet)
 except:
     print(Fore.LIGHTRED_EX+"Something's wrong,Try Again Later")
