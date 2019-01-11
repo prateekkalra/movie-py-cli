@@ -3,18 +3,35 @@ import requests
 from bs4 import BeautifulSoup
 import time
 from colorama import init,Fore
+import urllib
+import os
+import demjson
 init(convert=True)
 
 print(Fore.LIGHTBLACK_EX+"Loading...")
 time.sleep(0.5)
-print(Fore.LIGHTBLACK_EX+"Please wait...\n")
+print(Fore.LIGHTBLACK_EX+"Please wait...")
+try :
+    data = urllib.urlopen("http://www.imdb.com/")
+except :
+    print "No internet connection!" 
+    quit()
 
 try:
     args = sys.argv[1:]
-    movie = (' ').join(args)
+    movie = (' ').join(args).replace(" ", "+")
     page = requests.get('http://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=tt');
     soup1 = BeautifulSoup(page.content, 'html.parser')
-    movieid = soup1.select(".findList tr a")[0].get('href')
+    i = 0
+    for name in soup1.find_all("td", "result_text"):
+        i = i + 1
+        print "%d" %(i) + name.text
+    option = input('Enter the serial number of the movie: ')
+    os.system("reset")
+    if option > i :
+        print("Invalid option.")
+        quit()
+    movieid = soup1.select(".findList tr a")[option].get('href')
     movielink = "http://www.imdb.com" + movieid
     mlinkpage = requests.get(movielink)
     soup2 = BeautifulSoup(mlinkpage.content, 'html.parser')
@@ -22,14 +39,20 @@ try:
     movietitle = titlenyear[0:len(titlenyear) - 8]
     movieyear = titlenyear[len(titlenyear) - 6:len(titlenyear) - 2]
     movierating = soup2.select(".ratingValue span")[0].text
-    metascore = soup2.select(".metacriticScore")
-    metascore = metascore[0].text.strip() if metascore else None
-    contentrating = soup2.find('meta',{'itemprop':'contentRating'})
-    contentrating = contentrating['content'].strip() if contentrating else None
-    movielength = soup2.select(".subtext time")[0].text.strip()
+    metascore = soup2.find_all("span", class_ = "subText")
+    for score in metascore :
+        if score.text.find("|") != -1:
+            metascore = score.text
+    metascore = metascore[metascore.index("|") + 2: len(metascore) - 1] 
+    detailsjson = soup2.find_all("script", attrs = { "type" : True })
+    for detail in detailsjson :
+        if detail.get("type") == "application/ld+json" :
+            detailsjson = detail.text
+    details = demjson.decode(detailsjson) 
+    contentrating = details["contentRating"] 
+    movielength = details["duration"][2:len(details["duration"])]
     genresndate = [i.text for i in soup2.select(".subtext a")]
     releasedate = genresndate[-1].strip()
-    moviegenres = ""
     for i in soup2.find_all("div","txt-block"):
         if i.h4:
             if i.h4.text=="Budget:":moviebudget = i.h4.next_element.next_element.strip()
