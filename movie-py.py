@@ -27,7 +27,7 @@ try:
         i = i + 1
         print "%d" %(i) + name.text
     option = input('Enter the serial number of the movie: ')
-    os.system("reset")
+    os.system("reset") 
     if option > i :
         print("Invalid option.")
         quit()
@@ -35,27 +35,23 @@ try:
     movielink = "http://www.imdb.com" + movieid
     mlinkpage = requests.get(movielink)
     soup2 = BeautifulSoup(mlinkpage.content, 'html.parser')
-    titlenyear = soup2.select(".title_wrapper h1")[0].text
-    movietitle = titlenyear[0:len(titlenyear) - 8]
-    movieyear = titlenyear[len(titlenyear) - 6:len(titlenyear) - 2]
     movierating = soup2.select(".ratingValue span")[0].text
-    metascore = soup2.find_all("span", class_ = "subText")
-    for score in metascore :
-        if score.text.find("|") != -1:
-            metascore = score.text
-    metascore = metascore[metascore.index("|") + 2: len(metascore) - 1] 
+    metascore = soup2.find_all("div", class_ = "metacriticScore score_favorable titleReviewBarSubItem")[0].text
+    metascore = metascore[1:len(metascore) - 1]
     detailsjson = soup2.find_all("script", attrs = { "type" : True })
     for detail in detailsjson :
         if detail.get("type") == "application/ld+json" :
             detailsjson = detail.text
     details = demjson.decode(detailsjson) 
+    movietitle = details["name"]
     contentrating = details["contentRating"] 
     movielength = details["duration"][2:len(details["duration"])]
     genresndate = [i.text for i in soup2.select(".subtext a")]
     releasedate = genresndate[-1].strip()
     for i in soup2.find_all("div","txt-block"):
         if i.h4:
-            if i.h4.text=="Budget:":moviebudget = i.h4.next_element.next_element.strip()
+            if i.h4.text=="Budget:": moviebudget = i.h4.next_element.next_element.strip()
+
             if i.h4.text=="Opening Weekend USA:":movieopening = i.h4.next_element.next_element.strip()[:-1]
             if i.h4.text=="Gross USA:":movieusagross = i.h4.next_element.next_element.strip()[:-1]
             if i.h4.text=="Cumulative Worldwide Gross:":movieworldgross = i.h4.next_element.next_element.strip()[:-1]
@@ -63,19 +59,21 @@ try:
             if i.h4.text=="Taglines:":movietaglines = i.h4.next_element.next_element.strip()
             if i.h4.text=="Also Known As:":moviealsoknown = i.h4.next_element.next_element.strip()
             if i.h4.text=="Country:":moviecountry = i.h4.next_sibling.next_element.text.strip()
-    for x in range(len(genresndate) - 1):
-        moviegenres = moviegenres + ',' + genresndate[x]
-    moviegenres = moviegenres[1:]
-    moviedesc = soup2.select(".summary_text")[0].text.strip()
-    moviecast = [i.text for i in soup2.select(".credit_summary_item span a span")]
-    moviedirector = moviecast[0]
-    movieactors = moviecast[3] + ',' + moviecast[4] + ',' + moviecast[5];
+    moviegenres = ', '.join([str(x) for x in details["genre"]])
+    moviedesc = details["trailer"]["description"]
+    moviedirector = details["director"]["name"]
+    i = 0
+    actor = [None] * len(details["actor"])
+    for x in details["actor"] :
+        actor[i] = details["actor"][i]["name"]
+        i = i + 1
+    movieactors = ", ".join(actor)
+    movierating = soup2.select(".ratingValue span")[0].text
 
     print(Fore.LIGHTRED_EX + "Title: " + Fore.LIGHTGREEN_EX + movietitle)
     print(Fore.LIGHTRED_EX + "IMDB Rating: " + Fore.LIGHTYELLOW_EX + movierating + "/10")
     if metascore: print(Fore.LIGHTRED_EX + "Metascore: " + Fore.LIGHTYELLOW_EX + metascore + "/100")
     print(Fore.LIGHTRED_EX + "Length: " + Fore.LIGHTCYAN_EX + movielength)
-    print(Fore.LIGHTRED_EX + "Year: " + Fore.LIGHTMAGENTA_EX + movieyear)
     print(Fore.LIGHTRED_EX + "Genre: " + Fore.LIGHTBLUE_EX + moviegenres)
     print(Fore.LIGHTRED_EX + "Description: " + Fore.LIGHTWHITE_EX + moviedesc)
     print(Fore.LIGHTRED_EX + "Release date: " + Fore.LIGHTCYAN_EX + releasedate)
