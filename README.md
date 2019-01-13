@@ -14,5 +14,7 @@ A simple script for fetching movie details right from the terminal
  Note:- You can install them using sudo pip install name-of-the-package
  
 # Usage
-python movie-py.py "movie name"
-Replace movie name with the movie name you want to search.
+1.python movie-py.py "movie name".
+Note:- Replace movie name with the movie name you want to search.
+2.Many results will display enter your desired serial no.
+3.Then details will be printed on the screen.
