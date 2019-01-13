@@ -6,4 +6,4 @@ A simple script for fetching movie details right from the terminal
  2. BeautifulSoup4
  3. Colorama
 # Usage
-![Screenshot](https://user-images.githubusercontent.com/29385192/36164961-073b7642-1114-11e8-93b3-6718b54bc00b.PNG)
+![Screenshot](https://raw.githubusercontent.com/mmkumr/pictures/master/Screenshot%20from%202019-01-13%2023-56-32.png?token=AQpd0Y4sMiaii8XsTO6mXzOgDy_SYh63ks5cRL7NwA%3D%3D)
