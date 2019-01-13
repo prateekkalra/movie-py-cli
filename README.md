@@ -10,6 +10,8 @@ A simple script for fetching movie details right from the terminal
  6. urllib 
  7. os 
  8. demjson
-<b> Note:- You can intall then using sudo pip install <name of the package></b>
+ 
+ Note:- You can install then using sudo pip install name-of-the-package
+ 
 # Usage
 ![Screenshot](https://user-images.githubusercontent.com/29385192/36164961-073b7642-1114-11e8-93b3-6718b54bc00b.PNG)
