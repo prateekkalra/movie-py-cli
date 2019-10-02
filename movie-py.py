@@ -2,6 +2,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 import time
+import math
 from colorama import init,Fore
 init(convert=True)
 
@@ -9,7 +10,7 @@ print(Fore.LIGHTBLACK_EX+"Loading...")
 time.sleep(0.5)
 print(Fore.LIGHTBLACK_EX+"Please wait...\n")
 
-try:
+try: #try: so that if it doesnt work, the program doesnt end abruptly.
     args = sys.argv[1:]
     movie = (' ').join(args)
     page = requests.get('http://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=tt');
@@ -67,5 +68,5 @@ try:
     print(Fore.LIGHTRED_EX + "Cumulative Worldwide Gross: " + Fore.LIGHTBLUE_EX + movieworldgross)
     print(Fore.LIGHTRED_EX + "Ratio: " + Fore.LIGHTBLUE_EX + movieratio)
     print(Fore.LIGHTRED_EX + "Taglines: " + Fore.LIGHTBLUE_EX + movietaglines)
-except:
+except:#If the above code has any error, this block gets executed rather than getting terminated abruptly.
     print(Fore.LIGHTRED_EX+"Something's wrong,Try Again Later")
