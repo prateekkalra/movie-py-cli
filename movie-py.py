@@ -48,7 +48,10 @@ try:
     for i in soup2.find_all("div","credit_summary_item"):
         if i.h4:
             if i.h4.text=="Director:":moviedirector = i.a.next_element.strip()
-    #movieactors = moviecast[3] + ',' + moviecast[4] + ',' + moviecast[5]
+            if i.h4.text=="Stars:":movieactors = i.a.next_element.strip()
+            if i.h4.text=="Stars:":
+                if i.a.next_element.next_element.strip()==",":
+                    movieactors = movieactors + ',' + i.a.next_element.next_element.next_element.next_element.strip()
     print(Fore.LIGHTRED_EX + "Title: " + Fore.LIGHTGREEN_EX + movietitle)
     print(Fore.LIGHTRED_EX + "IMDB Rating: " + Fore.LIGHTYELLOW_EX + movierating + "/10")
     if metascore: print(Fore.LIGHTRED_EX + "Metascore: " + Fore.LIGHTYELLOW_EX + metascore + "/100")
@@ -59,7 +62,7 @@ try:
     print(Fore.LIGHTRED_EX + "Release date: " + Fore.LIGHTCYAN_EX + releasedate)
     if contentrating: print(Fore.LIGHTRED_EX + "Rating: " + Fore.LIGHTCYAN_EX + contentrating)
     print(Fore.LIGHTRED_EX + "Director: " + Fore.LIGHTBLACK_EX + moviedirector)
-    #print(Fore.LIGHTRED_EX + "Lead Cast: " + Fore.LIGHTBLACK_EX + movieactors)
+    print(Fore.LIGHTRED_EX + "Lead Cast: " + Fore.LIGHTBLACK_EX + movieactors)
     print(Fore.LIGHTRED_EX + "Country: " + Fore.LIGHTBLUE_EX + moviecountry)
     print(Fore.LIGHTRED_EX + "Also Known As: " + Fore.LIGHTBLUE_EX + moviealsoknown)
     print(Fore.LIGHTRED_EX + "Budget: " + Fore.LIGHTBLUE_EX + moviebudget)
