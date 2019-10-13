@@ -68,10 +68,10 @@ try:
     print(Fore.LIGHTRED_EX + "Country: " + Fore.LIGHTBLUE_EX + moviecountry)
     print(Fore.LIGHTRED_EX + "Also Known As: " + Fore.LIGHTGREEN_EX + moviealsoknown)
     print(Fore.LIGHTRED_EX + "Budget: " + Fore.LIGHTCYAN_EX + moviebudget)
-    #print(Fore.LIGHTRED_EX + "Opening Weekend USA: " + Fore.LIGHTBLACK_EX + movieopening)
-    #print(Fore.LIGHTRED_EX + "Gross USA: " + Fore.LIGHTBLACK_EX + movieusagross)
+    print(Fore.LIGHTRED_EX + "Opening Weekend USA: " + Fore.LIGHTBLACK_EX + movieopening)
+    print(Fore.LIGHTRED_EX + "Gross USA: " + Fore.LIGHTBLACK_EX + movieusagross)
     print(Fore.LIGHTRED_EX + "Cumulative Worldwide Gross: " + Fore.LIGHTCYAN_EX + movieworldgross)
-    #print(Fore.LIGHTRED_EX + "Ratio: " + Fore.LIGHTCYAN_EX + movieratio)
+    print(Fore.LIGHTRED_EX + "Ratio: " + Fore.LIGHTCYAN_EX + movieratio)
     print(Fore.LIGHTRED_EX + "Taglines: " + Fore.LIGHTGREEN_EX + movietaglines)
     print(Fore.LIGHTRED_EX + "More Like This: " + Fore.LIGHTWHITE_EX + similarMovies)
 except:
