@@ -18,7 +18,6 @@ try:
     soup1 = BeautifulSoup(page.content, 'html.parser')
     movieid = soup1.select(".findList tr a")[0].get('href')
     movielink = "http://www.imdb.com" + movieid
-    print(movielink)
     mlinkpage = requests.get(movielink)
     soup2 = BeautifulSoup(mlinkpage.content, 'html.parser')
     titlenyear = soup2.select(".title_wrapper h1")[0].text
