@@ -1,6 +1,6 @@
 # movie-py-cli
 
-A simple script for fetching movie details from IMDB.com using cli.
+A simple script for fetching movie details right from the terminal.
 
 # Requirements
 
