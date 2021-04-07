@@ -80,7 +80,7 @@ def main():
         movie_director = movie_cast['Director']
         movie_actors = movie_cast['Stars']
 
-        # After scraping, stop the `progress` func and print the results
+        # After scraping, stop the `animated_progress` func and print the results
         stop = True
 
         # Print the results
