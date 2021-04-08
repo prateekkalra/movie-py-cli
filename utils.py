@@ -4,7 +4,6 @@ class bcolors:
 
     Source: https://stackoverflow.com/a/42449998/12537848
     '''
-    
     HEADER = '\033[95m'
     RED = '\033[91m'
     GREEN = '\033[92m'
@@ -14,6 +13,7 @@ class bcolors:
     ITALIC = '\033[3m'
     UNDERLINE = '\033[4m'
     ENDC = '\033[0m'
+
 
 class Cleaner:
     '''
@@ -32,10 +32,11 @@ class Cleaner:
             :type: dict
 
         Returns:
-            A cleaned string list
+            A cleaned string dictionary
         '''
         cleaned_text = {}
         for item in dict_cast:
             pos = dict_cast[item].find('|')
             cleaned_text[item] = (dict_cast[item][:pos].strip())
+
         return cleaned_text
