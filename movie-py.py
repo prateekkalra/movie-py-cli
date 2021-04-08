@@ -1,5 +1,6 @@
 from utils import bcolors, Cleaner
 import sys
+import time
 import requests
 from bs4 import BeautifulSoup
 from itertools import cycle
@@ -8,10 +9,13 @@ import threading
 
 def animated_progress():
     global stop
-    for frame in cycle(r'-\|/-\|/'):
-        print('\r', frame, sep='', end='', flush=True)
+    print()
+    steps = ["⢿", "⣻", "⣽", "⣾", "⣷", "⣯", "⣟", "⡿"]
+    for step in cycle(steps):
+        print(bcolors.BLUE + bcolors.ITALIC + f'\rScrapping... {step}' + bcolors.ENDC, end='', flush=True)
         if stop:
-            print('\r', '', sep='', end='', flush=True)
+            print(bcolors.BLUE + bcolors.ITALIC + f"\rScrapping Done!" + bcolors.ENDC, flush=True)
+            print()
             break
 
 def main():
@@ -82,6 +86,7 @@ def main():
 
         # After scraping, stop the `animated_progress` func and print the results
         stop = True
+        time.sleep(1)
 
         # Print the results
         print(bcolors.RED + "Title: " + bcolors.BOLD + bcolors.GREEN + movie_title + bcolors.ENDC)
