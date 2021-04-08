@@ -34,12 +34,12 @@ def main():
     movie_also_known = 'N/A'
     movie_country = 'N/A'
     try:
-        # args = 'ironman'
+        # args = 'peaceful warrior'
         # User's desired movie
         args = sys.argv[1:]
         movie = (' ').join(args)
         # Scrape the page and do the assignments
-        page = requests.get('http://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=tt')
+        page = requests.get('https://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=tt')
         soup1 = BeautifulSoup(page.content, 'html.parser')
         movie_id = soup1.select(".findList tr a")[0].get('href')
         movie_link = "http://www.imdb.com" + movie_id
@@ -81,8 +81,8 @@ def main():
         # Get rid of useless characters
         cleaned_movie_cast = Cleaner()
         movie_cast = cleaned_movie_cast.text_cleaner(dict_cast=dict_cast)
-        movie_director = movie_cast['Director']
-        movie_actors = movie_cast['Stars']
+        movie_director = movie_cast['Director'] if movie_cast.get('Director') else (movie_cast['Creator'] if movie_cast.get('Creator') else 'N/A')
+        movie_actors = movie_cast['Stars'] if movie_cast.get('Stars') else 'N/A'
 
         # After scraping, stop the `animated_progress` func and print the results
         stop = True
@@ -112,6 +112,8 @@ def main():
         print(bcolors.RED + "Ratio: " + bcolors.BOLD + bcolors.GREEN + movie_ratio + bcolors.ENDC)
         print(bcolors.RED + "Taglines: " + bcolors.BOLD + bcolors.GREEN + movie_tag_lines + bcolors.ENDC)
     except Exception as e:
+        stop = True
+        time.sleep(1)
         print(bcolors.ITALIC + bcolors.WARNING + "Something goes wrong!\nError: {}".format(e), bcolors.ENDC)
         sys.exit(1)
 
