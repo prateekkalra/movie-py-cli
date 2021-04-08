@@ -37,7 +37,13 @@ def main():
         # args = 'peaceful warrior'
         # User's desired movie
         args = sys.argv[1:]
-        movie = (' ').join(args)
+        if not args:
+            stop = True
+            time.sleep(1)
+            print(bcolors.WARNING + bcolors.BOLD + 'NO FILM TITLE IS PROVIDED!' + bcolors.ENDC)
+            sys.exit(1)
+        else:
+            movie = (' ').join(args)
         # Scrape the page and do the assignments
         page = requests.get('https://www.imdb.com/find?ref_=nv_sr_fn&q=' + movie + '&s=tt')
         soup1 = BeautifulSoup(page.content, 'html.parser')
@@ -111,6 +117,7 @@ def main():
         print(bcolors.RED + "Cumulative Worldwide Gross: " + bcolors.BOLD + bcolors.GREEN + movie_world_gross + bcolors.ENDC)
         print(bcolors.RED + "Ratio: " + bcolors.BOLD + bcolors.GREEN + movie_ratio + bcolors.ENDC)
         print(bcolors.RED + "Taglines: " + bcolors.BOLD + bcolors.GREEN + movie_tag_lines + bcolors.ENDC)
+        print(bcolors.RED + "URL: " + bcolors.BOLD + bcolors.GREEN + movie_link + bcolors.ENDC)
     except Exception as e:
         stop = True
         time.sleep(1)
