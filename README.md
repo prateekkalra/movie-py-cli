@@ -15,4 +15,5 @@ Simply install the required packages with pip as below:
 
 # Screenshot
 
-![Screenshot](https://user-images.githubusercontent.com/29385192/36164961-073b7642-1114-11e8-93b3-6718b54bc00b.PNG)
+![Screenshot from 2021-04-11 19-21-03](https://user-images.githubusercontent.com/16654946/114309842-e38cf000-9afd-11eb-9461-46f8ff1e40f3.png)
+
