@@ -15,8 +15,8 @@ Simply install the required packages with pip as below:
 
 # How to Use:
 
-For using it, simply change directory to the main folder (movie-py-cli) and pass the title of your desired movie to retreive its information.
-Note that this script is written with Python 3.~.
+For using it, simply change directory to the main folder (movie-py-cli), run the script as below by passing the title of your desired movie to retreive its information.
+(Note that this script is written with Python 3.~.)
 
     $ python3 movie-py.py peaceful warrior
 
