@@ -1,5 +1,5 @@
 # movie-py-cli
-A simple script for fetching movie details right from the terminal
+movie-py-cli is a simple script for fetching movie details directly from the command-line or terminal. To use this script, you need to have Python running on your system. See further requirements below.
 
 # Requirements
  1. Requests
